@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result-deployment
+  labels:
+    app: result-deployment
+    type: frontend
+spec:
+  template:
+    metadata:
+      name: result-app
+      labels:
+        app: 000h/result
+        type: frontend
+    spec:
+      containers:
+        - name: result
+          image: 000h/result
+        - env:
+            - name: "db-cluster-ip-service"
+              value: "db"
+  selector:
+    matchLabels:
+      type: frontend

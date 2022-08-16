@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  labels:
+    app: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - image: postgres:latest
+          name: db
+          containers:
+          ports:
+          - containerPort: 5432
+        - env:
+            - name: "POSTGRESQL_DATABASE"
+              valueFrom:
+                configMapKeyRef:
+                  name: db
+                  key: database-name
+            - name: "POSTGRESQL_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: db
+                  key: database-user
+            - name: "POSTGRESQL_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: db
+                  key: database-password
+          

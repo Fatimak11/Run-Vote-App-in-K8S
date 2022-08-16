@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote-deployment
+  labels:
+    app: vote-deployment
+    type: frontend
+spec:
+  template:
+    metadata:
+      name: vote-app
+      labels:
+        app: 000h/vote
+        type: frontend
+    spec:
+      containers:
+        - name: vote
+          image: 000h/vote
+        - env:
+            - name: "redis-cluster-ip-service"
+              value: "redis"
+  selector:
+    matchLabels:
+      type: frontend

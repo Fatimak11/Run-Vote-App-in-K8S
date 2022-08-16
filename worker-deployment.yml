@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deployment
+  labels:
+    app: worker-deployment
+    type: backend
+spec:
+  template:
+    metadata:
+      name: worker-app
+      labels:
+        app: 000h/worker
+        type: backend
+    spec:
+      containers:
+        - name: worker
+          image: 000h/worker
+        - env:
+            - name: "redis-cluster-ip-service"
+              value: "redis"
+            - name: "db-cluster-ip-service"
+              value: "db"
+  selector:
+    matchLabels:
+      type: backend
