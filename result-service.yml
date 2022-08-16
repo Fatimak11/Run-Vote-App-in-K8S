@@ -10,7 +10,7 @@ spec:
     - name: http
       port: 80 # serive port
       targetPort: 80 # target port of the pods
-      nodePort: 31001 #This port is enable on node to send the traffic
+      nodePort: 31000 #This port is enable on node to send the traffic
       protocol: TCP
   selector:
       app: 000h/result
