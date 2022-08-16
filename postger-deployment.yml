@@ -14,25 +14,22 @@ spec:
         app: db
     spec:
       containers:
-        - image: postgres:latest
-          name: db
-          containers:
-          ports:
-          - containerPort: 5432
-        - env:
-            - name: "POSTGRESQL_DATABASE"
-              valueFrom:
-                configMapKeyRef:
-                  name: db
-                  key: database-name
-            - name: "POSTGRESQL_USER"
-              valueFrom:
-                secretKeyRef:
-                  name: db
-                  key: database-user
-            - name: "POSTGRESQL_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: db
-                  key: database-password
+      - image: postgres
+        name: postgres
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db-data
+      volumes:
+      - name: db-data
+        emptyDir: {} 
+
+
           
